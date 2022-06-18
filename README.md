@@ -16,7 +16,9 @@ ENUNCIADO TP6:
 [Trabajo Práctico 6 - Ec. diferenciales.pdf](https://github.com/valentinogiardino/SIM-TP6/files/8931862/Trabajo.Practico.6.-.Ec.diferenciales.pdf)
 
 Borrador Excel:
-[Modelo TP5 Carnets de Conducir.xlsx](https://github.com/valentinogiardino/SIM-TP6/files/8931864/Modelo.TP5.Carnets.de.Conducir.xlsx)
+[Modelo TP6 Carnets de Conducir.xlsx](https://github.com/valentinogiardino/SIM-TP6/files/8931868/Modelo.TP6.Carnets.de.Conducir.xlsx)
+
 
 Pseudocódigo:
-[Pseudocodigo TP5 SIM.txt](https://github.com/valentinogiardino/SIM-TP6/files/8931866/Pseudocodigo.TP5.SIM.txt)
+[Pseudocodigo TP6 SIM.txt](https://github.com/valentinogiardino/SIM-TP6/files/8931867/Pseudocodigo.TP6.SIM.txt)
+
