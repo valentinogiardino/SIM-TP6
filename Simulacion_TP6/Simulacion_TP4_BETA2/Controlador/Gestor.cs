@@ -330,7 +330,7 @@ namespace Simulacion_TP1.Controlador
                         break;
 
                     case "atentado":
-                        filaNueva = gestorAtentados.generarAtentado(filaAnterior);
+                        filaNueva = gestorAtentados.generarLlegadaAtentado(filaAnterior);
                         break;
 
                     default:

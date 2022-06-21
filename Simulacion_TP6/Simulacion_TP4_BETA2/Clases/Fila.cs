@@ -30,6 +30,10 @@ namespace Simulacion_TP1.Clases
         private Evento atentado;
 
 
+        private Evento finAtentadoServidor;
+        private Evento finAtentadoLlegada;
+
+
         private Servidor Tomas;
         private Servidor Alicia;
 
@@ -41,6 +45,7 @@ namespace Simulacion_TP1.Clases
 
         private int colaMatricula;
         private int colaRenovacion;
+        
 
         private Estadistica estadistica;
 
@@ -48,7 +53,7 @@ namespace Simulacion_TP1.Clases
         private List<Cliente> clientesMatriculaEnElSistema;
         private List<Cliente> clientesRenovacionEnElSistema;
 
-
+        private bool llegadaBloqueda = false;
 
         public Fila()
         {
@@ -135,5 +140,8 @@ namespace Simulacion_TP1.Clases
         public List<Cliente> ClientesRenovacionEnElSistema { get => clientesRenovacionEnElSistema; set => clientesRenovacionEnElSistema = value; }
         public List<Cliente> ClientesColaLlegada { get => clientesColaLlegada; set => clientesColaLlegada = value; }
         public Evento Atentado { get => atentado; set => atentado = value; }
+        public Evento FinAtentadoServidor { get => finAtentadoServidor; set => finAtentadoServidor = value; }
+        public Evento FinAtentadoLlegada { get => finAtentadoLlegada; set => finAtentadoLlegada = value; }
+        public bool LlegadaBloqueda { get => llegadaBloqueda; set => llegadaBloqueda = value; }
     }
 }

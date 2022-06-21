@@ -32,56 +32,72 @@ namespace Simulacion_TP1.Controlador
             Evento proximaLlegadaClienteMatricula = new Evento("proximaLlegadaClienteMatricula", gestor.obtenerProximaLlegadaMatricula() + filaNueva.Hora);
             filaNueva.ProximaLlegadaClienteMatricula = proximaLlegadaClienteMatricula;
 
-            Cliente cliente = new Cliente(idCliente, "matricula", "Esperando Atencion", filaNueva.Hora);
-            idCliente++;
-
-            if (filaAnterior.Tomas1.Estado == "Libre")  //&& filaAnterior.Tomas1.descansoPendiente = false) Habria que agregar un atributo en el servidor que sea una bandera para saber si tiene un descanso pendiente
+            if (filaAnterior.LlegadaBloqueda)
             {
-                //COMENZAR ATENCION
-                filaNueva.Tomas1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
-                cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
-                filaNueva.ClientesMatriculaEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
+                Cliente cliente = new Cliente(idCliente, "matricula", "Esperando Fin Bloqueo", filaNueva.Hora);
+                idCliente++;
+                filaNueva.ClientesColaLlegada.Add(cliente);
+                filaNueva.ClientesMatriculaEnElSistema.Add(cliente);
+                return filaNueva;
+                
+            }
+            else
+            {
+                Cliente cliente = new Cliente(idCliente, "matricula", "Esperando Atencion", filaNueva.Hora);
+                idCliente++;
 
-                //Generar y setear fin de atencion
-                Evento finAtencionMatricula = new Evento("finAtencionMatriculaTomas", cliente, filaNueva.Tomas1, gestor.obtenerProximoFinAtencionMatricula() + filaNueva.Hora);
-                filaNueva.FinAtencionMatriculaTomas = finAtencionMatricula;
+                if (filaAnterior.Tomas1.Estado == "Libre")  //&& filaAnterior.Tomas1.descansoPendiente = false) Habria que agregar un atributo en el servidor que sea una bandera para saber si tiene un descanso pendiente
+                {
+                    //COMENZAR ATENCION
+                    filaNueva.Tomas1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
+                    cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
+                    filaNueva.ClientesMatriculaEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
 
+                    //Generar y setear fin de atencion
+                    Evento finAtencionMatricula = new Evento("finAtencionMatriculaTomas", cliente, filaNueva.Tomas1, gestor.obtenerProximoFinAtencionMatricula() + filaNueva.Hora);
+                    filaNueva.FinAtencionMatriculaTomas = finAtencionMatricula;
+
+                    return filaNueva;
+                }
+
+                if (filaAnterior.Alicia1.Estado == "Libre")
+                {
+                    //COMENZAR ATENCION
+                    filaNueva.Alicia1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
+                    cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
+                    filaNueva.ClientesMatriculaEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
+
+                    //Generar y setear fin de atencion
+                    Evento finAtencionMatricula = new Evento("finAtencionMatriculaAlicia", cliente, filaNueva.Alicia1, gestor.obtenerProximoFinAtencionMatricula() + filaNueva.Hora);
+                    filaNueva.FinAtencionMatriculaAlicia = finAtencionMatricula;
+
+                    return filaNueva;
+                }
+
+                if (filaAnterior.Manuel1.Estado == "Libre")
+                {
+                    //COMENZAR ATENCION
+                    filaNueva.Manuel1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
+                    cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
+                    filaNueva.ClientesMatriculaEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
+
+                    //Generar y setear fin de atencion
+                    Evento finAtencionMatricula = new Evento("finAtencionMatriculaManuel", cliente, filaNueva.Manuel1, gestor.obtenerProximoFinAtencionMatricula() + filaNueva.Hora);
+                    filaNueva.FinAtencionMatriculaManuel = finAtencionMatricula;
+
+                    return filaNueva;
+                }
+
+
+                filaNueva.Estadistica.ContadorDirectoAColaMatricula++;
+                filaNueva.ColaMatricula++;
+                filaNueva.ClientesMatriculaEnElSistema.Add(cliente);
                 return filaNueva;
             }
 
-            if (filaAnterior.Alicia1.Estado == "Libre")
-            {
-                //COMENZAR ATENCION
-                filaNueva.Alicia1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
-                cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
-                filaNueva.ClientesMatriculaEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
-
-                //Generar y setear fin de atencion
-                Evento finAtencionMatricula = new Evento("finAtencionMatriculaAlicia", cliente, filaNueva.Alicia1, gestor.obtenerProximoFinAtencionMatricula() + filaNueva.Hora);
-                filaNueva.FinAtencionMatriculaAlicia = finAtencionMatricula;
-
-                return filaNueva;
-            }
-
-            if (filaAnterior.Manuel1.Estado == "Libre")
-            {
-                //COMENZAR ATENCION
-                filaNueva.Manuel1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
-                cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
-                filaNueva.ClientesMatriculaEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
-
-                //Generar y setear fin de atencion
-                Evento finAtencionMatricula = new Evento("finAtencionMatriculaManuel", cliente, filaNueva.Manuel1, gestor.obtenerProximoFinAtencionMatricula() + filaNueva.Hora);
-                filaNueva.FinAtencionMatriculaManuel = finAtencionMatricula;
-
-                return filaNueva;
-            }
 
 
-            filaNueva.Estadistica.ContadorDirectoAColaMatricula++;
-            filaNueva.ColaMatricula++;
-            filaNueva.ClientesMatriculaEnElSistema.Add(cliente);
-            return filaNueva;
+            
         }
 
         public Fila generarFilaLlegadaClienteRenovacion(Fila filaAnterior)
@@ -94,57 +110,74 @@ namespace Simulacion_TP1.Controlador
             Evento proximaLlegadaClienteRenovacion = new Evento("proximaLlegadaClienteRenovacion", gestor.obtenerProximoFinAtencionRenovacion() + filaNueva.Hora);
             filaNueva.ProximaLlegadaClienteRenovacion1 = proximaLlegadaClienteRenovacion;
 
-            Cliente cliente = new Cliente(idCliente, "renovacion", "Esperando Atencion", filaNueva.Hora);
-            idCliente++;
 
-            if (filaAnterior.Lucia1.Estado == "Libre")
+
+            if (filaAnterior.LlegadaBloqueda)
             {
-                //COMENZAR ATENCION
-                filaNueva.Lucia1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
-                cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
-                filaNueva.ClientesRenovacionEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
+                Cliente cliente = new Cliente(idCliente, "renovacion", "Esperando Fin Bloqueo", filaNueva.Hora);
+                idCliente++;
+                filaNueva.ClientesColaLlegada.Add(cliente);
+                filaNueva.ClientesRenovacionEnElSistema.Add(cliente);
+                return filaNueva;
 
-                //Generar y setear fin de atencion
-                Evento finAtencionRenovacion = new Evento("finAtencionRenovacionLucia", cliente, filaNueva.Lucia1, gestor.obtenerProximoFinAtencionRenovacion() + filaNueva.Hora);
-                filaNueva.FinAtencionRenovacionLucia = finAtencionRenovacion;
+            }
+            else
+            {
+                Cliente cliente = new Cliente(idCliente, "renovacion", "Esperando Atencion", filaNueva.Hora);
+                idCliente++;
 
+                if (filaAnterior.Lucia1.Estado == "Libre")
+                {
+                    //COMENZAR ATENCION
+                    filaNueva.Lucia1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
+                    cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
+                    filaNueva.ClientesRenovacionEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
+
+                    //Generar y setear fin de atencion
+                    Evento finAtencionRenovacion = new Evento("finAtencionRenovacionLucia", cliente, filaNueva.Lucia1, gestor.obtenerProximoFinAtencionRenovacion() + filaNueva.Hora);
+                    filaNueva.FinAtencionRenovacionLucia = finAtencionRenovacion;
+
+                    return filaNueva;
+                }
+
+                if (filaAnterior.Maria1.Estado == "Libre")
+                {
+                    //COMENZAR ATENCION
+                    filaNueva.Maria1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
+                    cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
+                    filaNueva.ClientesRenovacionEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
+
+                    //Generar y setear fin de atencion
+                    Evento finAtencionRenovacion = new Evento("finAtencionRenovacionMaria", cliente, filaNueva.Maria1, gestor.obtenerProximoFinAtencionRenovacion() + filaNueva.Hora);
+                    filaNueva.FinAtencionRenovacionMaria = finAtencionRenovacion;
+
+                    return filaNueva;
+                }
+
+                if (filaAnterior.Manuel1.Estado == "Libre")
+                {
+                    //COMENZAR ATENCION
+                    filaNueva.Manuel1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
+                    cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
+                    filaNueva.ClientesRenovacionEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
+
+                    //Generar y setear fin de atencion
+                    Evento finAtencionRenovacion = new Evento("finAtencionRenovacionManuel", cliente, filaNueva.Manuel1, gestor.obtenerProximoFinAtencionRenovacion() + filaNueva.Hora);
+                    filaNueva.FinAtencionRenovacionManuel = finAtencionRenovacion;
+
+                    return filaNueva;
+                }
+
+
+                filaNueva.Estadistica.ContadorDirectoAColaRenovacion++;
+                filaNueva.ColaRenovacion++;
+                filaNueva.ClientesRenovacionEnElSistema.Add(cliente);
                 return filaNueva;
             }
-
-            if (filaAnterior.Maria1.Estado == "Libre")
-            {
-                //COMENZAR ATENCION
-                filaNueva.Maria1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
-                cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
-                filaNueva.ClientesRenovacionEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
-
-                //Generar y setear fin de atencion
-                Evento finAtencionRenovacion = new Evento("finAtencionRenovacionMaria", cliente, filaNueva.Maria1, gestor.obtenerProximoFinAtencionRenovacion() + filaNueva.Hora);
-                filaNueva.FinAtencionRenovacionMaria = finAtencionRenovacion;
-
-                return filaNueva;
-            }
-
-            if (filaAnterior.Manuel1.Estado == "Libre")
-            {
-                //COMENZAR ATENCION
-                filaNueva.Manuel1.Estado = "Ocupado"; //Cambiar Estado del Servidor a Ocupado
-                cliente.Estado = "Siendo Atendido"; //Cambiar Estado del cliente a SA
-                filaNueva.ClientesRenovacionEnElSistema.Add(cliente); //Agregar cliente a la lista del sistema
-
-                //Generar y setear fin de atencion
-                Evento finAtencionRenovacion = new Evento("finAtencionRenovacionManuel", cliente, filaNueva.Manuel1, gestor.obtenerProximoFinAtencionRenovacion() + filaNueva.Hora);
-                filaNueva.FinAtencionRenovacionManuel = finAtencionRenovacion;
-
-                return filaNueva;
-            }
-
-
-            filaNueva.Estadistica.ContadorDirectoAColaRenovacion++;
-            filaNueva.ColaRenovacion++;
-            filaNueva.ClientesRenovacionEnElSistema.Add(cliente);
-            return filaNueva;
         }
+
+
+            
 
 
     }
