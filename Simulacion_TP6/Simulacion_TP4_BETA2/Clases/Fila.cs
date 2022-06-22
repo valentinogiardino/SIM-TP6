@@ -11,8 +11,6 @@ namespace Simulacion_TP1.Clases
         private double hora;
         private Evento eventoActual;
 
-        private List<Cliente> clientesColaLlegada;
-
         private Evento proximaLlegadaClienteMatricula;
         private Evento ProximaLlegadaClienteRenovacion;
 
@@ -27,11 +25,6 @@ namespace Simulacion_TP1.Clases
 
         private Evento descanso;
         private Evento finDelDia;
-        private Evento atentado;
-
-
-        private Evento finAtentadoServidor;
-        private Evento finAtentadoLlegada;
 
 
         private Servidor Tomas;
@@ -45,7 +38,6 @@ namespace Simulacion_TP1.Clases
 
         private int colaMatricula;
         private int colaRenovacion;
-        
 
         private Estadistica estadistica;
 
@@ -53,7 +45,16 @@ namespace Simulacion_TP1.Clases
         private List<Cliente> clientesMatriculaEnElSistema;
         private List<Cliente> clientesRenovacionEnElSistema;
 
-        private bool llegadaBloqueda = false;
+
+
+
+
+        private bool llegadaBloqueda = false;       //////////////////////////////
+        private List<Cliente> clientesColaLlegada;
+        private Evento finAtentadoServidor;
+        private Evento finAtentadoLlegada;
+        private Evento atentado;
+
 
         public Fila()
         {
@@ -64,7 +65,6 @@ namespace Simulacion_TP1.Clases
         {
             this.Hora = filaAnterior.Hora;
             this.EventoActual = filaAnterior.EventoActual;
-            this.ClientesColaLlegada = filaAnterior.ClientesColaLlegada;
             this.ProximaLlegadaClienteMatricula = filaAnterior.ProximaLlegadaClienteMatricula;
             this.ProximaLlegadaClienteRenovacion1 = filaAnterior.ProximaLlegadaClienteRenovacion1;
             this.FinAtencionMatriculaTomas = filaAnterior.FinAtencionMatriculaTomas;
@@ -88,11 +88,10 @@ namespace Simulacion_TP1.Clases
             return this;
         }
 
-        public Fila(double hora, Evento eventoActual, List<Cliente> clientesColaLlegada  ,Evento proximaLlegadaClienteMatricula, Evento proximaLlegadaClienteRenovacion, Evento finAtencionMatriculaTomas, Evento finAtencionMatriculaAlicia, Evento finAtencionMatriculaManuel, Evento finAtencionRenovacionLucia, Evento finAtencionRenovacionMaria, Evento finAtencionRenovacionManuel, Evento descanso, Evento finDelDia, Evento atentado,Servidor tomas, Servidor alicia, Servidor lucia, Servidor maria, Servidor manuel, int colaMatricula, int colaRenovacion, Estadistica estadistica, List<Cliente> clientesMatriculaEnElSistema, List<Cliente> clientesRenovacionEnElSistema)
+        public Fila(double hora, Evento eventoActual, Evento proximaLlegadaClienteMatricula, Evento proximaLlegadaClienteRenovacion, Evento finAtencionMatriculaTomas, Evento finAtencionMatriculaAlicia, Evento finAtencionMatriculaManuel, Evento finAtencionRenovacionLucia, Evento finAtencionRenovacionMaria, Evento finAtencionRenovacionManuel, Evento descanso, Evento finDelDia, Servidor tomas, Servidor alicia, Servidor lucia, Servidor maria, Servidor manuel, int colaMatricula, int colaRenovacion, Estadistica estadistica, List<Cliente> clientesMatriculaEnElSistema, List<Cliente> clientesRenovacionEnElSistema)
         {
             this.Hora = hora;
             this.EventoActual = eventoActual;
-            this.ClientesColaLlegada = clientesColaLlegada;
             this.ProximaLlegadaClienteMatricula = proximaLlegadaClienteMatricula;
             ProximaLlegadaClienteRenovacion1 = proximaLlegadaClienteRenovacion;
             this.FinAtencionMatriculaTomas = finAtencionMatriculaTomas;
@@ -103,7 +102,6 @@ namespace Simulacion_TP1.Clases
             this.FinAtencionRenovacionManuel = finAtencionRenovacionManuel;
             this.Descanso = descanso;
             this.FinDelDia = finDelDia;
-            this.Atentado = atentado;
             Tomas1 = tomas;
             Alicia1 = alicia;
             Lucia1 = lucia;
@@ -138,10 +136,10 @@ namespace Simulacion_TP1.Clases
         public Estadistica Estadistica { get => estadistica; set => estadistica = value; }
         public List<Cliente> ClientesMatriculaEnElSistema { get => clientesMatriculaEnElSistema; set => clientesMatriculaEnElSistema = value; }
         public List<Cliente> ClientesRenovacionEnElSistema { get => clientesRenovacionEnElSistema; set => clientesRenovacionEnElSistema = value; }
+        public bool LlegadaBloqueda { get => llegadaBloqueda; set => llegadaBloqueda = value; }
         public List<Cliente> ClientesColaLlegada { get => clientesColaLlegada; set => clientesColaLlegada = value; }
-        public Evento Atentado { get => atentado; set => atentado = value; }
         public Evento FinAtentadoServidor { get => finAtentadoServidor; set => finAtentadoServidor = value; }
         public Evento FinAtentadoLlegada { get => finAtentadoLlegada; set => finAtentadoLlegada = value; }
-        public bool LlegadaBloqueda { get => llegadaBloqueda; set => llegadaBloqueda = value; }
+        public Evento Atentado { get => atentado; set => atentado = value; }
     }
 }

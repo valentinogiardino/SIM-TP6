@@ -45,6 +45,12 @@ namespace Simulacion_TP1.Controlador
                 double duracion = gestorRungeKutta.generarTablaRungeKuttaServidor(0, filaNueva.Hora);
                 filaNueva.FinAtentadoServidor = new Evento("finAtentadoServidor", filaNueva.Hora + duracion);
                 
+                //Si el servidor esta atendiendo:
+                        //estado del servidor a bloqueado
+                        //aumentar el tiempo fin atencion al remanente actual mas la duracion del bloqueo
+                        //estado del cliente en esperando fin bloqueo servidor
+                //Si el servidor no esta atendiendo:
+                        //estado del servidor a bloqueado
             }
 
 
@@ -68,7 +74,17 @@ namespace Simulacion_TP1.Controlador
 
 
             //Desbloquear Servidor
-
+                //Si hay un cliente esperando fin bloqueo servidor:
+                    //Cambiar el estado del servidor a ocupado
+                    //Estado del cliente a siendo atendido
+                //Sino:
+                    //Preguntar por la colas, si hay alguien:
+                        //Cambiar el estado del servidor a ocupado
+                        //Buscar el cliente que llego primero y setearle el estado siendo atendido
+                        //decrementar cola
+                    //sino hay nadie en cola:
+                        //estado del servidor es libre
+                        
 
         }
 
