@@ -49,16 +49,50 @@ namespace Simulacion_TP1.Clases
 
 
 
-        private bool llegadaBloqueda = false;       //////////////////////////////
+        private bool llegadaBloqueda;       //////////////////////////////
         private List<Cliente> clientesColaLlegada;
         private Evento finAtentadoServidor;
         private Evento finAtentadoLlegada;
         private Evento atentado;
-
+        private bool DescansoActivo;
+        private bool bloqueoActivo;
 
         public Fila()
         {
 
+        }
+
+        public Fila(double hora, Evento eventoActual, Evento proximaLlegadaClienteMatricula, Evento proximaLlegadaClienteRenovacion, Evento finAtencionMatriculaTomas, Evento finAtencionMatriculaAlicia, Evento finAtencionMatriculaManuel, Evento finAtencionRenovacionLucia, Evento finAtencionRenovacionMaria, Evento finAtencionRenovacionManuel, Evento descanso, Evento finDelDia, Servidor tomas, Servidor alicia, Servidor lucia, Servidor maria, Servidor manuel, int colaMatricula, int colaRenovacion, Estadistica estadistica, List<Cliente> clientesMatriculaEnElSistema, List<Cliente> clientesRenovacionEnElSistema, bool llegadaBloqueda, List<Cliente> clientesColaLlegada, Evento finAtentadoServidor, Evento finAtentadoLlegada, Evento atentado, bool descansoActivo, bool bloqueoActivo)
+        {
+            this.hora = hora;
+            this.eventoActual = eventoActual;
+            this.proximaLlegadaClienteMatricula = proximaLlegadaClienteMatricula;
+            ProximaLlegadaClienteRenovacion = proximaLlegadaClienteRenovacion;
+            this.finAtencionMatriculaTomas = finAtencionMatriculaTomas;
+            this.finAtencionMatriculaAlicia = finAtencionMatriculaAlicia;
+            this.finAtencionMatriculaManuel = finAtencionMatriculaManuel;
+            this.finAtencionRenovacionLucia = finAtencionRenovacionLucia;
+            this.finAtencionRenovacionMaria = finAtencionRenovacionMaria;
+            this.finAtencionRenovacionManuel = finAtencionRenovacionManuel;
+            this.descanso = descanso;
+            this.finDelDia = finDelDia;
+            Tomas = tomas;
+            Alicia = alicia;
+            Lucia = lucia;
+            Maria = maria;
+            Manuel = manuel;
+            this.colaMatricula = colaMatricula;
+            this.colaRenovacion = colaRenovacion;
+            this.estadistica = estadistica;
+            this.clientesMatriculaEnElSistema = clientesMatriculaEnElSistema;
+            this.clientesRenovacionEnElSistema = clientesRenovacionEnElSistema;
+            this.llegadaBloqueda = llegadaBloqueda;
+            this.clientesColaLlegada = clientesColaLlegada;
+            this.finAtentadoServidor = finAtentadoServidor;
+            this.finAtentadoLlegada = finAtentadoLlegada;
+            this.atentado = atentado;
+            DescansoActivo1 = descansoActivo;
+            this.bloqueoActivo = bloqueoActivo;
         }
 
         public Fila clonar(Fila filaAnterior)
@@ -85,34 +119,20 @@ namespace Simulacion_TP1.Clases
             this.Estadistica = filaAnterior.Estadistica;
             this.ClientesMatriculaEnElSistema = filaAnterior.ClientesMatriculaEnElSistema;
             this.ClientesRenovacionEnElSistema = filaAnterior.ClientesRenovacionEnElSistema;
+
+            this.LlegadaBloqueda = filaAnterior.llegadaBloqueda;       //////////////////////////////
+            this.ClientesColaLlegada = filaAnterior.ClientesColaLlegada;
+            this.FinAtentadoServidor=filaAnterior.FinAtentadoServidor;
+            this.finAtentadoLlegada=filaAnterior.FinAtentadoLlegada;
+            this.Atentado = filaAnterior.Atentado;
+            this.BloqueoActivo = filaAnterior.BloqueoActivo;
+            this.DescansoActivo1 = filaAnterior.DescansoActivo1;
+
+
             return this;
         }
 
-        public Fila(double hora, Evento eventoActual, Evento proximaLlegadaClienteMatricula, Evento proximaLlegadaClienteRenovacion, Evento finAtencionMatriculaTomas, Evento finAtencionMatriculaAlicia, Evento finAtencionMatriculaManuel, Evento finAtencionRenovacionLucia, Evento finAtencionRenovacionMaria, Evento finAtencionRenovacionManuel, Evento descanso, Evento finDelDia, Servidor tomas, Servidor alicia, Servidor lucia, Servidor maria, Servidor manuel, int colaMatricula, int colaRenovacion, Estadistica estadistica, List<Cliente> clientesMatriculaEnElSistema, List<Cliente> clientesRenovacionEnElSistema)
-        {
-            this.Hora = hora;
-            this.EventoActual = eventoActual;
-            this.ProximaLlegadaClienteMatricula = proximaLlegadaClienteMatricula;
-            ProximaLlegadaClienteRenovacion1 = proximaLlegadaClienteRenovacion;
-            this.FinAtencionMatriculaTomas = finAtencionMatriculaTomas;
-            this.FinAtencionMatriculaAlicia = finAtencionMatriculaAlicia;
-            this.FinAtencionMatriculaManuel = finAtencionMatriculaManuel;
-            this.FinAtencionRenovacionLucia = finAtencionRenovacionLucia;
-            this.FinAtencionRenovacionMaria = finAtencionRenovacionMaria;
-            this.FinAtencionRenovacionManuel = finAtencionRenovacionManuel;
-            this.Descanso = descanso;
-            this.FinDelDia = finDelDia;
-            Tomas1 = tomas;
-            Alicia1 = alicia;
-            Lucia1 = lucia;
-            Maria1 = maria;
-            Manuel1 = manuel;
-            this.ColaMatricula = colaMatricula;
-            this.ColaRenovacion = colaRenovacion;
-            this.Estadistica = estadistica;
-            this.ClientesMatriculaEnElSistema = clientesMatriculaEnElSistema;
-            this.ClientesRenovacionEnElSistema = clientesRenovacionEnElSistema;
-        }
+
 
         public double Hora { get => hora; set => hora = value; }
         public Evento EventoActual { get => eventoActual; set => eventoActual = value; }
@@ -141,5 +161,7 @@ namespace Simulacion_TP1.Clases
         public Evento FinAtentadoServidor { get => finAtentadoServidor; set => finAtentadoServidor = value; }
         public Evento FinAtentadoLlegada { get => finAtentadoLlegada; set => finAtentadoLlegada = value; }
         public Evento Atentado { get => atentado; set => atentado = value; }
+        public bool BloqueoActivo { get => bloqueoActivo; set => bloqueoActivo = value; }
+        public bool DescansoActivo1 { get => DescansoActivo; set => DescansoActivo = value; }
     }
 }

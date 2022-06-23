@@ -155,46 +155,60 @@ namespace Simulacion_TP1.Controlador
                 }
 
 
-                if (filaAnterior.Alicia1.Estado == "Ocupado") //LO MISMO SI ESTA BLOQUEADO, YA QUE ESTARA SETEADO EL NUEVO FIN ATENCION
+                if (filaAnterior.Alicia1.Estado == "Ocupado" || filaAnterior.Alicia1.Estado == "BloqueadoConCliente") //LO MISMO SI ESTA BLOQUEADO, YA QUE ESTARA SETEADO EL NUEVO FIN ATENCION
                 {                                                                          //Termina su bloqueo, termina de atender y recien descansa
                     filaNueva.Alicia1.DescansoPendiente = true;
                     filaNueva.Descanso = new Evento("descanso", filaAnterior.Alicia1, filaAnterior.FinAtencionMatriculaAlicia.Tiempo, 30);
                 }
-                else
+                if (filaAnterior.Alicia1.Estado == "Libre" || filaAnterior.Alicia1.Estado == "BloqueadoSinCliente")
                 {
                     filaNueva.Descanso = new Evento("descanso", filaAnterior.Maria1, filaNueva.Hora + 30, 30);
                     filaNueva.Alicia1.Estado = "Descansando";
+                    filaNueva.DescansoActivo1 = true;
                 }
+               
+
             }
             if (filaAnterior.Descanso.Servidor.Nombre == "Maria")
             {
-                if (filaAnterior.ColaMatricula > 0)
+                filaNueva.DescansoActivo1 = false;
+                if (filaAnterior.BloqueoActivo)//Condicion para ver si cuando termina el descanso de maria, sigue bloqueada o no
                 {
-                    List<Cliente> clientesEnElSistema = filaAnterior.ClientesMatriculaEnElSistema;
-                    Cliente cliente = gestor.buscarProximoCliente(clientesEnElSistema);
-                    cliente.Estado = "Siendo Atendido";
-                    filaNueva.FinAtencionMatriculaAlicia = new Evento("finAtencionMatriculaAlicia", cliente, filaAnterior.Alicia1, gestor.obtenerProximoFinAtencionMatricula() + filaNueva.Hora);
-                    filaNueva.Alicia1.Estado = "Ocupado";
-                    filaNueva.ColaMatricula--;
-
+                    filaNueva.Alicia1.Estado = "BloqueadoSinCliente";
                 }
                 else
                 {
-                    filaNueva.FinAtencionMatriculaAlicia = null;
-                    filaNueva.Alicia1.Estado = "Libre";
+
+                    if (filaAnterior.ColaMatricula > 0)
+                    {
+                        List<Cliente> clientesEnElSistema = filaAnterior.ClientesMatriculaEnElSistema;
+                        Cliente cliente = gestor.buscarProximoCliente(clientesEnElSistema);
+                        cliente.Estado = "Siendo Atendido";
+                        filaNueva.FinAtencionMatriculaAlicia = new Evento("finAtencionMatriculaAlicia", cliente, filaAnterior.Alicia1, gestor.obtenerProximoFinAtencionMatricula() + filaNueva.Hora);
+                        filaNueva.Alicia1.Estado = "Ocupado";
+                        filaNueva.ColaMatricula--;
+
+                    }
+                    else
+                    {
+                        filaNueva.FinAtencionMatriculaAlicia = null;
+                        filaNueva.Alicia1.Estado = "Libre";
+                    }
+
+                    if (filaAnterior.Maria1.Estado == "Ocupado")
+                    {
+                        filaNueva.Maria1.DescansoPendiente = true;
+                        filaNueva.Descanso = new Evento("descanso", filaAnterior.Maria1, filaAnterior.FinAtencionRenovacionMaria.Tiempo, 30);
+                    }
+                    else
+                    {
+                        Servidor servidorVacio = new Servidor("", "libre", 0);
+                        filaNueva.Descanso = new Evento("descanso", servidorVacio, filaNueva.Hora + 30, 30);
+                        filaNueva.Maria1.Estado = "Descansando";
+                    }
                 }
 
-                if (filaAnterior.Maria1.Estado == "Ocupado")
-                {
-                    filaNueva.Maria1.DescansoPendiente = true;
-                    filaNueva.Descanso = new Evento("descanso", filaAnterior.Maria1, filaAnterior.FinAtencionRenovacionMaria.Tiempo, 30);
-                }
-                else
-                {
-                    Servidor servidorVacio = new Servidor("", "libre", 0);
-                    filaNueva.Descanso = new Evento("descanso", servidorVacio, filaNueva.Hora + 30, 30);
-                    filaNueva.Maria1.Estado = "Descansando";
-                }
+
             }
             if (filaAnterior.Descanso.Servidor.Nombre == "")
             {
@@ -225,7 +239,7 @@ namespace Simulacion_TP1.Controlador
                     
                     filaNueva.Maria1.Estado = "Libre";
                 }
-                filaNueva.Descanso = null;
+                filaNueva.Descanso = new Evento("descanso", filaAnterior.Tomas1);
             }
             return filaNueva;
 

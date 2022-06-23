@@ -80,21 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clases\Estadistica.cs" />
-    <Compile Include="Clases\Clientes\Cliente.cs" />
-    <Compile Include="Clases\Eventos\Evento.cs" />
-    <Compile Include="Clases\FilaMuestra.cs" />
-    <Compile Include="Clases\FilaRungeKutta.cs" />
-    <Compile Include="Clases\RenglonDistribucion.cs" />
-    <Compile Include="Clases\Fila.cs" />
-    <Compile Include="Clases\Servidores\Servidor.cs" />
-    <Compile Include="Controlador\Gestor.cs" />
-    <Compile Include="Controlador\GestorAtentados.cs" />
-    <Compile Include="Controlador\GestorDescansos.cs" />
-    <Compile Include="Controlador\GestorFinDia.cs" />
-    <Compile Include="Controlador\GestorFinesAtencion.cs" />
-    <Compile Include="Controlador\GestorLlegadas.cs" />
-    <Compile Include="Controlador\GestorRungeKutta.cs" />
+    <Compile Include="Cliente.cs" />
     <Compile Include="DataSet1.cs">
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
@@ -103,6 +89,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSet1.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Estadistica.cs" />
+    <Compile Include="Evento.cs" />
+    <Compile Include="Fila.cs" />
+    <Compile Include="FilaMuestra.cs" />
+    <Compile Include="FilaRungeKutta.cs" />
+    <Compile Include="Gestor.cs" />
+    <Compile Include="GestorAtentados.cs" />
+    <Compile Include="GestorDescansos.cs" />
+    <Compile Include="GestorFinDia.cs" />
+    <Compile Include="GestorFinesAtencion.cs" />
+    <Compile Include="GestorLlegadas.cs" />
+    <Compile Include="GestorRungeKutta.cs" />
     <Compile Include="Interfaz\Pantalla.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +109,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RenglonDistribucion.cs" />
+    <Compile Include="Servidor.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <EmbeddedResource Include="Interfaz\Informe.rdlc" />
     <EmbeddedResource Include="Interfaz\Pantalla.resx">

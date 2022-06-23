@@ -177,6 +177,7 @@ namespace Simulacion_TP1.Controlador
             this.gestorFinesAtencion = new GestorFinesAtencion(this);
             this.gestorDescansos = new GestorDescansos(this);
             this.gestorFinDia = new GestorFinDia(this);
+            this.gestorAtentados = new GestorAtentados(this);
 
             this.randomPoissonRenovacion = new Random();
             Thread.Sleep(1);
@@ -292,10 +293,22 @@ namespace Simulacion_TP1.Controlador
                 List<Cliente> clientesLicenciaEnElSistema = new List<Cliente>();
 
 
+
+
+                bool llegadaBloqueda = false;       //////////////////////////////
+                List<Cliente> clientesColaLlegada = new List<Cliente>();
+                Evento finAtentadoServidor = null;
+                Evento finAtentadoLlegada = null;
+                Evento atentado = new Evento("atentado", gestorAtentados.obtenerProximoAtentado());
+                //Evento atentado = null;
+                bool bloqueoActivo = false;
+                bool descansoActivo = false;
+
+
                 Fila fila = new Fila(hora, eventoActual, proximaLlegadaClienteMatricula, proximaLlegadaClienteRenovacion, finAtencionMatriculaTomas, 
                     finAtencionMatriculaAlicia, finAtencionMatriculaManuel, finAtencionRenovacionLucia, finAtencionRenovacionMaria, 
                     finAtencionRenovacionManuel, descanso, finDelDia, tomas, alicia, lucia, maria, manuel, colaMatricula, colaRenovacion, 
-                    estadistica, clientesMatriculaEnElSistema, clientesLicenciaEnElSistema);
+                    estadistica, clientesMatriculaEnElSistema, clientesLicenciaEnElSistema, llegadaBloqueda, clientesColaLlegada, finAtentadoServidor, finAtentadoLlegada, atentado, bloqueoActivo, descansoActivo);
 
                 filaNueva = fila;
                 
@@ -307,7 +320,7 @@ namespace Simulacion_TP1.Controlador
                 Evento eventoActual = obtenerProximoEvento(filaAnterior.FinAtencionMatriculaTomas, filaAnterior.FinAtencionMatriculaAlicia, 
                     filaAnterior.FinAtencionMatriculaManuel, filaAnterior.FinAtencionRenovacionLucia, 
                     filaAnterior.FinAtencionRenovacionMaria, filaAnterior.FinAtencionRenovacionManuel, filaAnterior.Descanso, filaAnterior.FinDelDia, filaAnterior.ProximaLlegadaClienteMatricula,
-                    filaAnterior.ProximaLlegadaClienteRenovacion1);
+                    filaAnterior.ProximaLlegadaClienteRenovacion1, filaAnterior.Atentado, filaAnterior.FinAtentadoLlegada, filaAnterior.FinAtentadoServidor);
                 switch (eventoActual.Nombre)
 
                 {
@@ -354,7 +367,15 @@ namespace Simulacion_TP1.Controlador
                         break;
 
                     case "atentado":
-                        filaNueva = gestorAtentados.generarLlegadaAtentado(filaAnterior);
+                        filaNueva = gestorAtentados.llegadaAtentado(filaAnterior);
+                        break;
+
+                    case "finAtentadoLlegada":
+                        filaNueva = gestorAtentados.finAtentadoBloqueoLlegada(filaAnterior);
+                        break;
+
+                    case "finAtentadoServidor":
+                        filaNueva = gestorAtentados.finAtentadoBloqueoServidor(filaAnterior);
                         break;
 
                     default:
@@ -417,7 +438,7 @@ namespace Simulacion_TP1.Controlador
         }
 
         public Evento obtenerProximoEvento(Evento proximaLlegadaClienteMatricula, Evento proximaLlegadaClienteRenovacion, Evento finAtencionMatricula1, Evento finAtencionMatricula2, Evento finAtencionMatricula3,
-           Evento finAtencionRenovacion1, Evento finAtencionRenovacion2, Evento finAtencionRenovacion3, Evento descanso, Evento finDia)
+           Evento finAtencionRenovacion1, Evento finAtencionRenovacion2, Evento finAtencionRenovacion3, Evento descanso, Evento finDia, Evento atentado, Evento finAtentadoLlegada, Evento finAtentadoServidor)
         {
             List<Evento> proximosEventos = new List<Evento>();
             proximosEventos.Add(proximaLlegadaClienteMatricula);
@@ -431,7 +452,11 @@ namespace Simulacion_TP1.Controlador
             proximosEventos.Add(descanso);
             proximosEventos.Add(finDia);
 
-            return proximosEventos.Min();
+            proximosEventos.Add(atentado);
+            proximosEventos.Add(finAtentadoLlegada);
+            proximosEventos.Add(finAtentadoServidor);
+            Evento min = proximosEventos.Min();
+            return min;
 
         }
 

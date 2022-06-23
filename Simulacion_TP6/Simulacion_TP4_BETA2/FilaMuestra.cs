@@ -49,8 +49,13 @@ namespace Simulacion_TP1.Clases
         private int contadorDirectoAColaMatricula;
         private int contadorDirectoAColaRenovacion;
 
-        
 
+       
+        private int clientesColaLlegada;
+        private string finAtentadoServidor;
+        private string finAtentadoLlegada;
+        private string atentado;
+       
 
 
         public FilaMuestra() { }
@@ -160,8 +165,34 @@ namespace Simulacion_TP1.Clases
             this.CantidadClientesMatriculaNoAtendidos =filaAMostrar.Estadistica.CantidadClientesMatriculaNoAtendidos;
             this.CantidadClienteRenovacionNoAtendidos =filaAMostrar.Estadistica.CantidadClienteRenovacionNoAtendidos;
             this.ContadorDirectoAColaMatricula =filaAMostrar.Estadistica.ContadorDirectoAColaMatricula;
-            this.ContadorDirectoAColaRenovacion =filaAMostrar.Estadistica.ContadorDirectoAColaRenovacion; ;
-            
+            this.ContadorDirectoAColaRenovacion =filaAMostrar.Estadistica.ContadorDirectoAColaRenovacion;
+
+
+            this.ClientesColaLlegada = filaAMostrar.ClientesColaLlegada.Count;
+            if (filaAMostrar.Atentado == null)
+            {
+                this.Atentado = null;
+            }
+            else
+            {
+                this.Atentado = Math.Round(filaAMostrar.Atentado.Tiempo, 2).ToString();
+            }
+            if (filaAMostrar.FinAtentadoLlegada == null)
+            {
+                this.FinAtentadoLlegada = null;
+            }
+            else
+            {
+                this.FinAtentadoLlegada = Math.Round(filaAMostrar.FinAtentadoLlegada.Tiempo, 2).ToString();
+            }
+            if (filaAMostrar.FinAtentadoServidor == null)
+            {
+                this.FinAtentadoServidor = null;
+            }
+            else
+            {
+                this.FinAtentadoServidor = Math.Round(filaAMostrar.FinAtentadoServidor.Tiempo, 2).ToString();
+            }
         }
 
         public FilaMuestra(double hora, string eventoActual, string proximaLlegadaClienteMatricula, string proximaLlegadaClienteRenovacion, string finAtencionMatriculaTomas, string finAtencionMatriculaAlicia, string finAtencionMatriculaManuel, string finAtencionRenovacionLucia, string finAtencionRenovacionMaria, string finAtencionRenovacionManuel, string descanso, string finDelDia, string tomas, string alicia, string lucia, string maria, string manuel, int colaMatricula, int colaRenovacion, int cantidadClientesMatriculaAtendidos, int cantidadClienteRenovacionAtendidos, int cantidadClientesMatriculaNoAtendidos, int cantidadClienteRenovacionNoAtendidos, int contadorDirectoAColaMatricula, int contadorDirectoAColaRenovacion)
@@ -219,7 +250,11 @@ namespace Simulacion_TP1.Clases
         public int CantidadClienteRenovacionNoAtendidos { get => cantidadClienteRenovacionNoAtendidos; set => cantidadClienteRenovacionNoAtendidos = value; }
         public int ContadorDirectoAColaMatricula { get => contadorDirectoAColaMatricula; set => contadorDirectoAColaMatricula = value; }
         public int ContadorDirectoAColaRenovacion { get => contadorDirectoAColaRenovacion; set => contadorDirectoAColaRenovacion = value; }
-        
+        public int ClientesColaLlegada { get => clientesColaLlegada; set => clientesColaLlegada = value; }
+        public string FinAtentadoServidor { get => finAtentadoServidor; set => finAtentadoServidor = value; }
+        public string FinAtentadoLlegada { get => finAtentadoLlegada; set => finAtentadoLlegada = value; }
+        public string Atentado { get => atentado; set => atentado = value; }
+
 
 
 

@@ -41,7 +41,12 @@ namespace Simulacion_TP1.Clases
             this.nombre = nombre;
             this.tiempo = tiempo;
         }
-
+        public Evento(string nombre, Servidor servidor)
+        {
+            this.nombre = nombre;
+            this.servidor = servidor;
+           
+        }
 
         public double Tiempo { get => tiempo; set => tiempo = value; }
         public Cliente ClienteMatricula { get => clienteMatricula; set => clienteMatricula = value; }
